@@ -1,0 +1,6 @@
+data
+.vscode
+.env
+.o
+.pyc
+__pycache__
