@@ -1,35 +1,50 @@
 import math
+from math import exp, pi
 import scipy as sp
 import numpy as np
 import pandas as pd
 
 
-class Transformer:
-    def fit(self, X_train, y_train):
-        pass
-
-    def transform(self, X_test) -> np.ndarray:
-        pass
-
-
 class NaiveBayesClassifier:
+    """An Implementation of the Naive Bayes classification algorithm
+    """
     def __init__(self):
-        pass
+
+        return
+
+    def mean(self, x: list) -> float:
+        """Function that calculates the mean of the input array"""
+        return sum(x) / float(len(x))
+
+    def sqrt(self, x):
+        "takes the square root of the input number"
+        return x**(1 / 2)
+
+    def stdev(self, a):
+        """takes the standard deviation of the input array"""
+        avg = self.mean(a)
+        # insane one liner
+        variance = sum([(x - avg)**2 for x in a]) / float(len(a) - 1)
+        return self.sqrt(variance)
+
+    def calculate_probability(self, x, mean, stdev):
+        """calculates the Gaussian PDF for x"""
+        exponent = exp(-((x - mean)**2 / (2 * self.stdev**2)))
+        return (1 / (self.sqrt(2 * pi) * self.stdev)) * exponent
 
     def fit(self, X_train, y_train):
-        pass
+        return None
 
-    def predict(self, X_test: pd.DataFrame):
-        pass
+    def predict(self, X_test):
+        return None
 
     def score(self, X_test, y_test) -> float:
-        pass
+        return None
 
 
 if __name__ == '__main__':
     print("Naive Bayes Classifier Docs")
     model = NaiveBayesClassifier()
-    transformer = Transformer()
     data = []
     print("given the following data:", data)
     label = " "
