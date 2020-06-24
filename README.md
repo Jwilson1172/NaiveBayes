@@ -12,5 +12,15 @@
 
 </div>
 <p>
+<h1>
+    Methods:
+</h1>
+<dl>
+    <dt>calculate_probability(self, x: list, mean: float, stdev: float)
+    </dt>
+    <dd>
+
+    </dd>
+</dl>
 
 </p>
