@@ -38,17 +38,15 @@ class FileHandle():
                             sep='')
         return self.dataset
 
-
-"""
-    def str_column_to_float(self, dataset: list, column):
-        \"\"\"A method that takes a column and convert's it into float type
-        \"\"\"
+    def str_column_to_float(self, column) -> type(None):
+        """changes a Column into float type
+        """
         for row in self.dataset:
             row[column] = float(row[column].strip())
 
-    def str_column_to_int(self, dataset, column):
-        \"\"\"A method that takes the column values and convert's them to int type
-        \"\"\"
+    def str_column_to_int(self, column):
+        """A method that takes the column values and convert's them to int type
+        """
         class_values = [row[column] for row in self.dataset]
         unique = set(class_values)
         lookup = dict()
@@ -57,15 +55,20 @@ class FileHandle():
         for row in dataset:
             row[column] = lookup[row[column]]
         return lookup
-"""
 
 
 class NaiveBayesClassifier:
     """An Implementation of the Naive Bayes classification algorithm
+    current params:
+    ---------------
+    `append` : append all summaries and probabilities from the last iteration
+    used to train a model on data
     """
-    def __init__(self):
+    def __init__(self, params: dict):
         self.dataset = None
         self.acc = 0
+        self.probas = None
+        self.params = params
         return
 
     def mean(self, x: list) -> float:
@@ -109,7 +112,6 @@ class NaiveBayesClassifier:
         self.acc = correct / float(len(actual)) * 100.0
         return self.acc
 
-        #
     def summarize_dataset(self, dataset: list) -> list:
         """Calculate the mean, stdev and count for each column in a dataset
             Note that is is not the fitted values of the dataset these are for
@@ -122,7 +124,6 @@ class NaiveBayesClassifier:
         """
         summaries = [(self.mean(column), self.stdev(column), len(column))
                      for column in zip(*dataset)]
-        del (summaries[-1])
         return summaries
 
     def summarize_by_class(self, dataset: list) -> list:
@@ -162,7 +163,18 @@ class NaiveBayesClassifier:
                 mean, stdev, _ = class_summaries[i]
                 probabilities[class_value] *= self.calculate_probability(
                     row[i], mean, stdev)
+
+        if self.probas is not None:
+            self.probas.append(probabilities)
+        elif (self.params['append'] == True) and (self.probas is None):
+            self.probas = []
+            self.probas.append(probabilities)
+        else:
+            self.probas = probabilities
         return probabilities
+
+    def fit(self, dataset):
+        return f""
 
     def predict(self, summaries: list, row: list):
         """Predict the class for a given row
@@ -172,7 +184,7 @@ class NaiveBayesClassifier:
             row (list): the row that is going to be used for the prediction
 
         Returns:
-            best_label (undefined type): predicted class label of the input
+            best_label (int): predicted class label of the input
             row and the fitted values.
         """
         probabilities = self.calculate_class_probabilities(summaries, row)
@@ -223,7 +235,8 @@ if __name__ == '__main__':
 
     print("Generated a dataset with a gaussian\nclass weight distribution:",
           class_weights)
-    nb = NaiveBayesClassifier()
+    nb = NaiveBayesClassifier({'append': True})
+
     summaries = nb.summarize_by_class(dataset)
 
     probabilities = nb.calculate_class_probabilities(summaries, dataset[0])

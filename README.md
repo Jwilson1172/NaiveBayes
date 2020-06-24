@@ -12,15 +12,5 @@
 
 </div>
 <p>
-<h1>
-    Methods:
-</h1>
-<dl>
-    <dt>calculate_probability(self, x: list, mean: float, stdev: float)
-    </dt>
-    <dd>
-
-    </dd>
-</dl>
-
+<a href="./docs/naivebayes.html">NaiveBayes Class Documentation</a>
 </p>
