@@ -217,16 +217,28 @@ class NaiveBayesClassifier:
         return (predictions)
 
 
-if __name__ == '__main__':
+def generate_random_gauss(n_samples: int, pandas: bool, n_classes: int, ):
+    """Method Generates random gaussian distribution data
 
-    class_choices = [0, 1]
-    size = 10000
+    Returns:
+        [list]: dataset containing feature data and class labels
+    """
+    class_choices = [x for x in range(n_classes)]
     dataset = []
-    for i in range(size):
+    for i in range(n_samples):
         col1 = random.gauss(3.0, 1.0)
         col2 = random.gauss(3.0, 1.0)
         label = random.choice(class_choices)
         dataset.append([col1, col2, label])
+    # option to return in list or dataframe
+    if not pandas:
+        return dataset
+    else:
+        return pd.DataFrame(dataset,
+                            columns=["col_".join(x) for x in range(len(dataset[0]))])
+
+
+if __name__ == '__main__':
 
     # some QA on the dataset
     class_weights = pd.DataFrame(dataset)[2].value_counts(normalize=True)

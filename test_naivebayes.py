@@ -1,10 +1,11 @@
 import unittest
 
+from naivebayes import NaiveBayesClassifier
+from naivebayes import FileHandle
+
 
 class TestNB(unittest.TestCase):
-    # testing the fit method of NBC for accuracy
-    # and make sure that it is behaving as expected
-    def test_fit(self):
+    def test_fit(self, dataset):
         """Doc String Placeholder
         """
         return
