@@ -52,7 +52,7 @@ class FileHandle():
         lookup = dict()
         for i, value in enumerate(unique):
             lookup[value] = i
-        for row in dataset:
+        for row in self.dataset:
             row[column] = lookup[row[column]]
         return lookup
 
@@ -64,20 +64,19 @@ class NaiveBayesClassifier:
     `append` : append all summaries and probabilities from the last iteration
     used to train a model on data
     """
-    def __init__(self, params: dict):
+    def __init__(self):
         self.dataset = None
         self.acc = 0
         self.probas = None
-        self.params = params
         return
 
     def mean(self, x: list) -> float:
         """Function that calculates the mean of the input array"""
-        return sum(x) / float(len(x))
+        return np.mean(x)
 
     def sqrt(self, x):
         "takes the square root of the input number"
-        return x**(1 / 2)
+        return math.sqrt(x)
 
     def stdev(self, a):
         """takes the standard deviation of the input array"""
@@ -164,13 +163,6 @@ class NaiveBayesClassifier:
                 probabilities[class_value] *= self.calculate_probability(
                     row[i], mean, stdev)
 
-        if self.probas is not None:
-            self.probas.append(probabilities)
-        elif (self.params['append'] == True) and (self.probas is None):
-            self.probas = []
-            self.probas.append(probabilities)
-        else:
-            self.probas = probabilities
         return probabilities
 
     def fit(self, dataset):
@@ -217,37 +209,11 @@ class NaiveBayesClassifier:
         return (predictions)
 
 
-def generate_random_gauss(n_samples: int, pandas: bool, n_classes: int, ):
-    """Method Generates random gaussian distribution data
-
-    Returns:
-        [list]: dataset containing feature data and class labels
-    """
-    class_choices = [x for x in range(n_classes)]
-    dataset = []
-    for i in range(n_samples):
-        col1 = random.gauss(3.0, 1.0)
-        col2 = random.gauss(3.0, 1.0)
-        label = random.choice(class_choices)
-        dataset.append([col1, col2, label])
-    # option to return in list or dataframe
-    if not pandas:
-        return dataset
-    else:
-        return pd.DataFrame(dataset,
-                            columns=["col_".join(x) for x in range(len(dataset[0]))])
-
-
 if __name__ == '__main__':
-
-    # some QA on the dataset
-    class_weights = pd.DataFrame(dataset)[2].value_counts(normalize=True)
-    assert class_weights.values[0] <= 0.55
-    assert class_weights.values[1] <= 0.55
 
     print("Generated a dataset with a gaussian\nclass weight distribution:",
           class_weights)
-    nb = NaiveBayesClassifier({'append': True})
+    nb = NaiveBayesClassifier()
 
     summaries = nb.summarize_by_class(dataset)
 
