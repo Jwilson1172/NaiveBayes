@@ -1,23 +1,6 @@
 import unittest
 
-from naivebayes import NaiveBayesClassifier
-from naivebayes import FileHandle
+from naivebayes import Model, Metrics
 
-
-class TestNB(unittest.TestCase):
-    def test_fit(self, dataset):
-        """Doc String Placeholder
-        """
-        return
-
-    def test_train(self):
-        """Doc String Placeholder
-        """
-        return
-
-    def test_score(self):
-        """Doc String Placeholder
-        """
-        return
-
+class testsuit(unittest.TestCase):
     pass
