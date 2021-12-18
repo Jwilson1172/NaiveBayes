@@ -1,10 +1,7 @@
 import unittest
-from sklearn.naive_bayes import CategoricalNB, GaussianNB
-from naivebayes import NaiveBayesClassifier
+from NaiveBayes.modules.naivebayes import BayesTherory
 
 
 class TestModel(unittest.TestCase):
     def __init__(self):
-        self.project_model = NaiveBayesClassifier()
-        self.sk_catNB = CategoricalNB()
-        self.sk_contNB = GaussianNB()
+        self.bt = BayesTherory()
