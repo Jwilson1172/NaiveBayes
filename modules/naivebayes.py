@@ -1,4 +1,4 @@
-from sklearn.base import BaseEstimator
+from sklearn.base import BaseEstimator, TransformerMixin
 from pandas import DataFrame, Series
 
 
@@ -6,7 +6,7 @@ class BayesTherory:
     def __init__(self):
         pass
 
-    def prob_given_label(self, y, cond_y):
+    def prob_label_occuring(self, y, cond_y):
         # copy input to avoid changing original
         y_cp = y[:]
         # start count
@@ -70,7 +70,6 @@ class BayesTherory:
 
     def calc_post(priors, marginal_prob, label_prob):
         pass
-
 
 class NaiveBayesClassifier(BaseEstimator):
     def __init__(self, *args, **kwargs):
